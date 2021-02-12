@@ -43,7 +43,7 @@ class PairListTableViewController: UITableViewController {
     
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return PersonController.shared.pairs.count
+        return PersonController.shared.pairs.count - 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -51,6 +51,7 @@ class PairListTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        print(section)
         return "Group \(section + 1)"
     }
 
