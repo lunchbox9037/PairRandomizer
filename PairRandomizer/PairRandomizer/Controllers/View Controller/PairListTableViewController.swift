@@ -12,7 +12,7 @@ class PairListTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         PersonController.shared.loadFromPersistentStorage()
-        PersonController.shared.reSectionWhenPersisting()
+        PersonController.shared.reSection()
         tableView.reloadData()
     }
     
@@ -26,7 +26,7 @@ class PairListTableViewController: UITableViewController {
         let addButton = UIAlertAction(title: "Add", style: .default) { (action) in
             guard let personName = alert.textFields?[0].text, !personName.isEmpty else {return}
             PersonController.shared.addPerson(name: personName)
-            PersonController.shared.randomize()
+            PersonController.shared.reSection()
             self.tableView.reloadData()
         }
         

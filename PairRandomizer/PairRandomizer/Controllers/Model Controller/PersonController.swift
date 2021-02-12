@@ -53,7 +53,7 @@ class PersonController {
         saveToPersistentStorage()
     }
     
-    func reSectionWhenPersisting() {
+    func reSection() {
         pairs = [[]]
         var pairsCount = 0
         if people.count % 2 == 0 {
