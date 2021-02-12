@@ -40,6 +40,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="YP0-Qs-44H">
+                        <barButtonItem key="leftBarButtonItem" title="Randomize" id="dHo-iz-j7t">
+                            <connections>
+                                <action selector="randomizeButtonTapped:" destination="lnd-uv-HQZ" id="95m-cS-ora"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="iJW-Ok-f2K">
                             <connections>
                                 <action selector="addButtonTapped:" destination="lnd-uv-HQZ" id="cHI-uF-4CW"/>
