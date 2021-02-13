@@ -12,6 +12,7 @@ class PersonController {
     static let shared = PersonController()
     var people: [Person] = []
     var pairs: [[Person]] = []
+    var groupLimit: Int = 2
     
     // MARK: - CRUD
     func addPerson(name: String) {
@@ -27,57 +28,37 @@ class PersonController {
     
     func randomize() {
         people = people.shuffled()
+        createGroups()
+    }
+    
+    func createGroups() {
         pairs = [[]]
-        var pairsCount = 0
-        if people.count % 2 == 0 {
-            pairsCount = people.count / 2
+        var groupCount = 0
+        var nameIndex = 0
+        var groupLimitIndex = 0
+        
+        if people.count % groupLimit == 0 {
+            groupCount = people.count / groupLimit
         } else {
-            pairsCount = (people.count / 2) + 1
+            groupCount = (people.count / groupLimit) + 1
         }
         
-        var i = 0
-        var n = 0
-        for _ in 0..<pairsCount {
+        for pairIndex in 0..<groupCount {
             pairs.append([])
-        }
-        
-        for p in 0..<pairsCount {
-            while n < 2 && i < people.count {
-                pairs[p].append(people[i])
-                i += 1
-                n += 1
+            while groupLimitIndex < groupLimit && nameIndex < people.count {
+                pairs[pairIndex].append(people[nameIndex])
+                nameIndex += 1
+                groupLimitIndex += 1
             }
-            n = 0
+            groupLimitIndex = 0
         }
         
         saveToPersistentStorage()
     }
     
-    func reSection() {
-        pairs = [[]]
-        var pairsCount = 0
-        if people.count % 2 == 0 {
-            pairsCount = people.count / 2
-        } else {
-            pairsCount = (people.count / 2) + 1
-        }
-        
-        var i = 0
-        var n = 0
-        for _ in 0..<pairsCount {
-            pairs.append([])
-        }
-        
-        for p in 0..<pairsCount {
-            while n < 2 && i < people.count {
-                pairs[p].append(people[i])
-                i += 1
-                n += 1
-            }
-            n = 0
-        }
-        
-        saveToPersistentStorage()
+    func clearGroups() {
+        people = []
+        createGroups()
     }
     
     // MARK: - Persistence

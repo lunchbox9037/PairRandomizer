@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -15,9 +16,60 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="separatorColor" systemColor="opaqueSeparatorColor"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="1eM-S5-T2y">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="xZ1-ec-eSx">
+                                    <rect key="frame" x="16" y="14" width="227.5" height="32"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Group Size:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="6X0-V5-kA1">
+                                            <rect key="frame" x="0.0" y="0.0" width="96.5" height="32"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(2)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XO8-lw-6tN">
+                                            <rect key="frame" x="104.5" y="0.0" width="21" height="32"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="Ghb-R7-GGX">
+                                            <rect key="frame" x="133.5" y="0.0" width="94" height="32"/>
+                                            <connections>
+                                                <action selector="groupSizeStepperTapped:" destination="lnd-uv-HQZ" eventType="valueChanged" id="k5b-1o-5J4"/>
+                                            </connections>
+                                        </stepper>
+                                    </subviews>
+                                </stackView>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Quu-oz-f4w">
+                                    <rect key="frame" x="274" y="15" width="124" height="30"/>
+                                    <color key="backgroundColor" systemColor="systemRedColor"/>
+                                    <state key="normal" title="Clear Groups ">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="resetButtonTapped:" destination="lnd-uv-HQZ" eventType="touchUpInside" id="vHF-5k-eOV"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemGrayColor"/>
+                            <constraints>
+                                <constraint firstItem="xZ1-ec-eSx" firstAttribute="width" secondItem="1eM-S5-T2y" secondAttribute="width" multiplier="0.55" id="9mz-40-CDV"/>
+                                <constraint firstItem="xZ1-ec-eSx" firstAttribute="centerY" secondItem="1eM-S5-T2y" secondAttribute="centerY" id="LLf-wP-pe1"/>
+                                <constraint firstItem="Quu-oz-f4w" firstAttribute="centerY" secondItem="1eM-S5-T2y" secondAttribute="centerY" id="YXd-c9-dNp"/>
+                                <constraint firstItem="Quu-oz-f4w" firstAttribute="width" secondItem="1eM-S5-T2y" secondAttribute="width" multiplier="0.3" id="bvh-nC-eOl"/>
+                                <constraint firstItem="Quu-oz-f4w" firstAttribute="leading" secondItem="xZ1-ec-eSx" secondAttribute="trailing" constant="12" id="f0p-Sd-EkO"/>
+                                <constraint firstAttribute="trailing" secondItem="Quu-oz-f4w" secondAttribute="trailing" constant="16" id="vlv-CF-jWp"/>
+                                <constraint firstItem="xZ1-ec-eSx" firstAttribute="leading" secondItem="1eM-S5-T2y" secondAttribute="leading" constant="16" id="wyg-jI-Mjy"/>
+                            </constraints>
+                        </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="personCell" textLabel="GLG-5F-I7a" rowHeight="46" style="IBUITableViewCellStyleDefault" id="AUS-Ms-Adw">
-                                <rect key="frame" x="0.0" y="28" width="414" height="46"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="46"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="AUS-Ms-Adw" id="Hit-fl-66D">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="46"/>
@@ -40,17 +92,24 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="YP0-Qs-44H">
-                        <barButtonItem key="leftBarButtonItem" title="Randomize" id="dHo-iz-j7t">
+                        <barButtonItem key="leftBarButtonItem" title="Randomize❓" id="dHo-iz-j7t">
+                            <color key="tintColor" systemColor="systemBackgroundColor"/>
                             <connections>
                                 <action selector="randomizeButtonTapped:" destination="lnd-uv-HQZ" id="95m-cS-ora"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="iJW-Ok-f2K">
+                            <color key="tintColor" systemColor="systemBackgroundColor"/>
                             <connections>
                                 <action selector="addButtonTapped:" destination="lnd-uv-HQZ" id="cHI-uF-4CW"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="groupSizeLabel" destination="XO8-lw-6tN" id="Muk-Fj-6di"/>
+                        <outlet property="groupSizeStepper" destination="Ghb-R7-GGX" id="I3m-ZT-LBy"/>
+                        <outlet property="resetButton" destination="Quu-oz-f4w" id="QEY-p1-WCM"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rBV-Q5-QRu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -64,6 +123,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="SyH-hF-bQb">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" systemColor="systemFillColor"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -76,8 +136,20 @@
         </scene>
     </scenes>
     <resources>
+        <systemColor name="opaqueSeparatorColor">
+            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemFillColor">
+            <color red="0.47058823529411764" green="0.47058823529411764" blue="0.50196078431372548" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGrayColor">
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

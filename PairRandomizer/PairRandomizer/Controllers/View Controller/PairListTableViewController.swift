@@ -8,25 +8,53 @@
 import UIKit
 
 class PairListTableViewController: UITableViewController {
+    // MARK: - Outlets
+    @IBOutlet weak var groupSizeLabel: UILabel!
+    @IBOutlet weak var groupSizeStepper: UIStepper!
+    @IBOutlet weak var resetButton: UIButton!
+    
+    var groupRooms = ["Winterfell", "Sunspear", "Old Valyria", "Astapor", "Braavos", "Da Norf", "Mereen", "White Harbor", "Kings Landing", "Sunspear", "Lannisport", "Quarth", "Pentos"]
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         PersonController.shared.loadFromPersistentStorage()
-        PersonController.shared.reSection()
-        tableView.reloadData()
+        PersonController.shared.createGroups()
+        setupViews()
     }
     
     // MARK: - Actions
     @IBAction func addButtonTapped(_ sender: Any) {
+        addPerson()
+    }
+    
+    @IBAction func resetButtonTapped(_ sender: Any) {
+        PersonController.shared.clearGroups()
+        tableView.reloadData()
+    }
+    
+    @IBAction func randomizeButtonTapped(_ sender: Any) {
+        PersonController.shared.randomize()
+        tableView.reloadData()
+    }
+    
+    @IBAction func groupSizeStepperTapped(_ sender: Any) {
+        groupSizeLabel.text = String(Int(groupSizeStepper.value))
+        PersonController.shared.groupLimit = Int(groupSizeStepper.value)
+        PersonController.shared.createGroups()
+        tableView.reloadData()
+    }
+    
+    // MARK: - Methods
+    func addPerson() {
         let alert = UIAlertController(title: "Add Person", message: nil, preferredStyle: .alert)
-        //add a text field to the alert
         alert.addTextField { (_) in}
         
         let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let addButton = UIAlertAction(title: "Add", style: .default) { (action) in
             guard let personName = alert.textFields?[0].text, !personName.isEmpty else {return}
             PersonController.shared.addPerson(name: personName)
-            PersonController.shared.reSection()
+            PersonController.shared.createGroups()
             self.tableView.reloadData()
         }
         
@@ -34,11 +62,16 @@ class PairListTableViewController: UITableViewController {
         alert.addAction(cancelButton)
         
         self.present(alert, animated: true, completion: nil)
-    }
+    }//end func
     
-    @IBAction func randomizeButtonTapped(_ sender: Any) {
-        PersonController.shared.randomize()
-        tableView.reloadData()
+    func setupViews() {
+        groupRooms = groupRooms.shuffled()
+        resetButton.layer.cornerRadius = 6
+        groupSizeStepper.minimumValue = 2
+        groupSizeStepper.maximumValue = 5
+        groupSizeStepper.autorepeat = true
+        groupSizeStepper.value = Double(PersonController.shared.pairs.count)
+        groupSizeLabel.text = String(Int(groupSizeStepper.value))
     }
     
     // MARK: - Table view data source
@@ -51,8 +84,7 @@ class PairListTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        print(section)
-        return "Group \(section + 1)"
+            return "Group \(section + 1) ---- \(groupRooms[section])"
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -71,3 +103,4 @@ class PairListTableViewController: UITableViewController {
         }
     }
 }//end class
+
