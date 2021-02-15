@@ -35,12 +35,13 @@ class PairListTableViewController: UITableViewController {
     
     @IBAction func randomizeButtonTapped(_ sender: Any) {
         PersonController.shared.randomize()
+        groupRooms = groupRooms.shuffled()
         tableView.reloadData()
     }
     
     @IBAction func groupSizeStepperTapped(_ sender: Any) {
         groupSizeLabel.text = String(Int(groupSizeStepper.value))
-        PersonController.shared.groupLimit = Int(groupSizeStepper.value)
+        PersonController.shared.groupSize = Int(groupSizeStepper.value)
         PersonController.shared.createGroups()
         tableView.reloadData()
     }
@@ -70,33 +71,36 @@ class PairListTableViewController: UITableViewController {
         groupSizeStepper.minimumValue = 2
         groupSizeStepper.maximumValue = 5
         groupSizeStepper.autorepeat = true
-        groupSizeStepper.value = Double(PersonController.shared.pairs.count)
         groupSizeLabel.text = String(Int(groupSizeStepper.value))
-    }
+    }//end func
     
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return PersonController.shared.pairs.count - 1
+        return PersonController.shared.groups.count - 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return PersonController.shared.pairs[section].count
+        return PersonController.shared.groups[section].count
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if PersonController.shared.groups[section].count != 0 {
             return "Group \(section + 1) ---- \(groupRooms[section])"
+        } else {
+            return nil
+        }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "personCell", for: indexPath)
-        cell.textLabel?.text = PersonController.shared.pairs[indexPath.section][indexPath.row].name.capitalized
+        cell.textLabel?.text = PersonController.shared.groups[indexPath.section][indexPath.row].name.capitalized
         return cell
     }
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let personToDelete = PersonController.shared.pairs[indexPath.section][indexPath.row]
-            PersonController.shared.pairs[indexPath.section].remove(at: indexPath.row)
+            let personToDelete = PersonController.shared.groups[indexPath.section][indexPath.row]
+            PersonController.shared.groups[indexPath.section].remove(at: indexPath.row)
             PersonController.shared.delete(person: personToDelete)
             tableView.deleteRows(at: [indexPath], with: .fade)
             tableView.reloadData()

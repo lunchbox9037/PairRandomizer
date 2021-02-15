@@ -11,8 +11,8 @@ class PersonController {
     // MARK: - Properties
     static let shared = PersonController()
     var people: [Person] = []
-    var pairs: [[Person]] = []
-    var groupLimit: Int = 2
+    var groups: [[Person]] = []
+    var groupSize: Int = 2
     
     // MARK: - CRUD
     func addPerson(name: String) {
@@ -32,27 +32,27 @@ class PersonController {
     }
     
     func createGroups() {
-        pairs = [[]]
+        groups = [[]]
         var groupCount = 0
         var nameIndex = 0
         var groupLimitIndex = 0
-        
-        if people.count % groupLimit == 0 {
-            groupCount = people.count / groupLimit
+
+        if people.count % groupSize == 0 {
+            groupCount = people.count / groupSize
         } else {
-            groupCount = (people.count / groupLimit) + 1
+            groupCount = (people.count / groupSize) + 1
         }
-        
+
         for pairIndex in 0..<groupCount {
-            pairs.append([])
-            while groupLimitIndex < groupLimit && nameIndex < people.count {
-                pairs[pairIndex].append(people[nameIndex])
+            groups.append([])
+            while groupLimitIndex < groupSize && nameIndex < people.count {
+                groups[pairIndex].append(people[nameIndex])
                 nameIndex += 1
                 groupLimitIndex += 1
             }
             groupLimitIndex = 0
         }
-        
+
         saveToPersistentStorage()
     }
     
